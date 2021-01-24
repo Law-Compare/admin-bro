@@ -51,7 +51,10 @@ const ResourceAction: React.FC<Props> = (props) => {
   const { resources, match, location } = props
   const { resourceId } = match.params
 
-  const [filterVisible, setFilerVisible] = useState(queryHasFilter(location.search))
+  // const [filterVisible, setFilterVisible] = useState(queryHasFilter(location.search))
+  // By default the filter drawer will open when you open the page if there is a filter in the URL.
+  // Don't do that. Keep it closed until you click to open it.
+  const [filterVisible, setFilterVisible] = useState(false)
   const [tag, setTag] = useState('')
 
   const resource = resources.find(r => r.id === resourceId)
@@ -72,7 +75,7 @@ const ResourceAction: React.FC<Props> = (props) => {
   }
 
   const toggleFilter = listAction.showFilter
-    ? ((): void => setFilerVisible(!filterVisible))
+    ? ((): void => setFilterVisible(!filterVisible))
     : undefined
 
   return (
@@ -88,7 +91,7 @@ const ResourceAction: React.FC<Props> = (props) => {
         <FilterDrawer
           resource={resource}
           isVisible={filterVisible}
-          toggleFilter={(): void => { setFilerVisible(!filterVisible) }}
+          toggleFilter={(): void => { setFilterVisible(!filterVisible) }}
         />
       ) : ''}
     </Box>
